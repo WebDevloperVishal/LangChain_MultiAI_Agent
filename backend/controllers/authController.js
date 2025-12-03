@@ -1,4 +1,4 @@
-import { email } from "zod";
+import { hashSync } from "bcryptjs";
 import { RegisterSchema } from "../schema/user.js"
 
 export const RegisterController = async (req ,res) => {
@@ -13,7 +13,7 @@ export const RegisterController = async (req ,res) => {
             })
         }
 
-        const existInUser = await WebGLShaderPrecisionFormat.user.findUnique({
+        const existingUser = await WebGLShaderPrecisionFormat.user.findUnique({
             where:{
                 email:userSchema.email
             }
@@ -25,6 +25,9 @@ export const RegisterController = async (req ,res) => {
                 message: "User already exists"
             })
         }
+        const hashPassword = hashSync(userSchema.password,10);
+
+
     } catch (error) {
         
     }
